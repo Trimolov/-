@@ -1,0 +1,19 @@
+[package]
+name = "xyz-coords"
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+description = "Shows XYZ coordinates in a corner of the screen (Horizon sandboxed .hmod)"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+# Pinned to the same Horizon revision that a working published sandboxed .hmod
+# (levzzz5154/horizon-mod-menu) was built against: newer upstream no longer ships
+# the WebAssembly mod SDK.
+horizon-mod-sdk = { git = "https://github.com/horizon-rust/horizon", rev = "83f15fa276c44711276b6ceb5f0fe0c9c534dc66" }
+
+[profile.release]
+opt-level = "s"
+lto = true

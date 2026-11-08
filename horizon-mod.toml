@@ -1,0 +1,8 @@
+id = "xyz_coords"
+name = "XYZ Coords"
+version = "0.1.0"
+description = "Shows your XYZ coordinates in the top-left corner of the screen."
+authors = ["you"]
+api = "0.1"
+side = "client"
+capabilities = ["game-read", "hud"]
