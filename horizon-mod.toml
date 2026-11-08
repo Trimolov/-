@@ -1,0 +1,8 @@
+id = "xyz_coords"
+name = "FPS and Coords HUD"
+version = "0.2.0"
+description = "Shows FPS and XYZ coordinates on screen. Toggle and move each one with /hud."
+authors = ["you"]
+api = "0.1"
+side = "client"
+capabilities = ["game-read", "hud", "storage"]
