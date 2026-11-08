@@ -1,0 +1,38 @@
+name: Build .hmod
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust wasm target
+        run: rustup target add wasm32-unknown-unknown
+
+      - name: Install cargo-horizon-mod
+        run: cargo install --git https://github.com/horizon-rust/horizon --rev 83f15fa276c44711276b6ceb5f0fe0c9c534dc66 cargo-horizon-mod
+
+      - name: Build and check
+        run: |
+          cargo horizon-mod build
+          cargo horizon-mod check target/horizon-mod/xyz_coords.hmod
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: xyz_coords.hmod
+          path: target/horizon-mod/xyz_coords.hmod
+
+      - name: Publish release (direct link for the launcher)
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v0.1.0
+          files: target/horizon-mod/xyz_coords.hmod
