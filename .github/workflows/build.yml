@@ -1,0 +1,22 @@
+name: Build .hmod
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: rustup target add wasm32-unknown-unknown
+      - run: cargo install --git https://github.com/horizon-rust/horizon --rev 83f15fa276c44711276b6ceb5f0fe0c9c534dc66 cargo-horizon-mod
+      - run: |
+          cargo horizon-mod build
+          cargo horizon-mod check target/horizon-mod/xyz_coords.hmod
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v0.1.0
+          files: target/horizon-mod/xyz_coords.hmod
